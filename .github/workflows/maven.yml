@@ -8,17 +8,17 @@ name: maven-github-workflow
       - main
 jobs:
   build:
-#    runs-on: ubuntu-latest
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+#    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       
-#      - name: Set up JDK 21
-#        uses: actions/setup-java@v4
-#        with:
-#          java-version: '21'
-#          distribution: temurin
-#          cache: maven
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: temurin
+          cache: maven
       
       - name: Build with Maven
         run: mvn -B package --file pom.xml
@@ -28,7 +28,10 @@ jobs:
         with:
           name: my-maven-artifact
           path: target/*.jar
-      
+
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag aiteam15/maven-demo:$(date +%s)
 #      - name: Log in to Docker Hub
 #        uses: docker/login-action@v3
 #        with:
