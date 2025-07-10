@@ -28,8 +28,6 @@ jobs:
         with:
           name: my-maven-artifact
           path: target/*.jar
-
-      - uses: actions/checkout@v4
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag aiteam15/maven-demo:$(date +%s)
 #      - name: Log in to Docker Hub
